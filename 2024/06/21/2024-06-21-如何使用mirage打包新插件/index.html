@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://flying-doc.limeng32.com/img/blog/lowcode2.png">
 <meta property="og:image" content="http://flying-doc.limeng32.com/img/blog/test.png">
 <meta property="article:published_time" content="2024-06-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-07-05T11:37:59.288Z">
+<meta property="article:modified_time" content="2024-07-06T14:25:07.852Z">
 <meta property="article:author" content="limeng32">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://flying-doc.limeng32.com/img/blog/lowcode2.png">
@@ -104,7 +104,9 @@
 <p>如果您使用 mirage-lowcode 的默认模版进行出码，这个单页应用的效果是展示一个简单的 state 交互和一个 ajax 交互（可以在浏览器控制台看到调用），相关的实现可以参考设计器左侧的“数据源”和“源码面板”，更多的内容请参考网上的 ali-lowcode 教程。</p>
 <p>接下来，我们使用 mirage 把这个单页应用打包成 vscode 插件。</p>
 <h2 id="使用-mirage-将单页应用进行打包"><a href="#使用-mirage-将单页应用进行打包" class="headerlink" title="使用 mirage 将单页应用进行打包"></a><a href="#%E4%BD%BF%E7%94%A8-mirage-%E5%B0%86%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E8%BF%9B%E8%A1%8C%E6%89%93%E5%8C%85">使用 mirage 将单页应用进行打包</a></h2><p>首先拉取 mirage_box 项目的 main 分支，然后把单页应用文件夹拷贝到 &#x2F;application&#x2F;apps&#x2F; 下，并给这个文件夹重命名为 app，这是 mirage_box 打包的固定文件结构。</p>
-<h3 id="生成打包工作空间"><a href="#生成打包工作空间" class="headerlink" title="生成打包工作空间"></a><a href="#%E7%94%9F%E6%88%90%E6%89%93%E5%8C%85%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4">生成打包工作空间</a></h3><p>我们进入 mirage_box 的 &#x2F;toolkit 目录下，在这里我们需要执行 webpack 以生成文件夹 &#x2F;workshop 用于打包。首先观察 appConfig.json 文件，这是我们在 &#x2F;toolkit 下唯一需要改动的文件，也是 mirage 插件的配置文件。appConfig.json 文件的属性如下：</p>
+<h3 id="生成打包工作空间"><a href="#生成打包工作空间" class="headerlink" title="生成打包工作空间"></a><a href="#%E7%94%9F%E6%88%90%E6%89%93%E5%8C%85%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4">生成打包工作空间</a></h3><p>我们进入 mirage_box 的 &#x2F;toolkit 目录下，在这里我们需要执行 webpack 以生成文件夹 &#x2F;workshop 用于打包。首先我们执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --force</span><br></pre></td></tr></table></figure>
+<p>以安装依赖。然后观察 appConfig.json 文件，这是我们在 &#x2F;toolkit 下唯一需要改动的文件，也是 mirage 插件的配置文件。appConfig.json 文件的属性如下：</p>
 <ul>
 <li><code>name</code> 必填，封装为插件后的名称，只能由英文、数字、横线组成，需要在 vscode 的插件中确保唯一。如果您想将插件发布到市场，需要先通过搜索确保它在市场中唯一；</li>
 <li><code>displayName</code> 可选，封装为插件后的显示名称，可以为中文；</li>
@@ -138,13 +140,12 @@
 <h3 id="调试插件"><a href="#调试插件" class="headerlink" title="调试插件"></a><a href="#%E8%B0%83%E8%AF%95%E6%8F%92%E4%BB%B6">调试插件</a></h3><p>我们在 &#x2F;workshop 下执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run webpack-dev</span><br></pre></td></tr></table></figure>
 <p>即可调试插件，如果您的 vscode 没有自动打开一个新的调试窗口，您可以通过点击上方菜单”运行”-“启动调试”来打开这个窗口，之后在调试窗口中可以看见刚刚打包好的插件，如下图所示：<br><img src="/../../img/blog/test.png" title="mirage-test"></p>
-<p>如果您想跳过前面的步骤直接尝试这一步，也可以<a href="https://gitee.com/limeng32/mirage_box/tree/feature/test?_blank">从这里下载</a>后直接调试。</p>
-<p>（在启动调试时，有可能在右下角出现一个错误提示：”Activating extension ‘mirage-prototype1.mirage-prototype1’ failed: Cannot find module…”），这是因为 &#x2F;workshop 中的 package.json 的 <code>name</code> 及 <code>publisher</code> 与 &#x2F;prototype 中的 package.json 中的不同，属于现阶段调试模式的 bug，您可以忽略这个错误提示。这个问题不会在打包为 vsix 文件后出现。）</p>
+<p>如果您想跳过前面的步骤直接尝试这一步，也可以 <a href="https://gitee.com/limeng32/mirage_box/tree/feature/test?_blank">拉取 feature&#x2F;test 分支代码</a> 后直接调试。</p>
+<p>（在启动调试时，有可能在右下角出现一个错误提示：”Activating extension ‘mirage-prototype1.mirage-prototype1’ failed: Cannot find module…”），这是因为 &#x2F;workshop 中的 package.json 的 <code>name</code> 及 <code>publisher</code> 与 &#x2F;prototype 中的 package.json 中不同所致，属于现阶段调试模式的 bug，您可以忽略这个错误提示。这个问题不会在打包为 vsix 文件后出现。）</p>
 <h3 id="打包和发布插件"><a href="#打包和发布插件" class="headerlink" title="打包和发布插件"></a><a href="#%E6%89%93%E5%8C%85%E5%92%8C%E5%8F%91%E5%B8%83%E6%8F%92%E4%BB%B6">打包和发布插件</a></h3><p>我们在 &#x2F;workshop 下执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vsce package</span><br></pre></td></tr></table></figure>
-<p>可以打包插件，执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vsce publish</span><br></pre></td></tr></table></figure>
-<p>可以发布插件。</p>
+<p>可以打包插件。</p>
+<p>（您也可以在 <code>feature/lowcode</code>、<code>feature/swagger</code>、<code>feature/flow</code> 分支上练习以上操作）</p>
   
 	</div>
 		<footer class="article-footer clearfix">
